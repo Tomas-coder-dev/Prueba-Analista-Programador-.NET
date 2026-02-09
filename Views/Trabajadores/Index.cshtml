@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Listado de Trabajadores";
+    string sexoActual = ViewBag.SexoActual as string ?? "";
 }
 
 <h1>Listado de Trabajadores</h1>
@@ -14,11 +15,26 @@
     <span>
         <form asp-action="Index" method="get" class="d-inline">
             <label for="sexo" class="form-label me-2">Filtrar por sexo:</label>
-            <select id="sexo" name="sexo" class="form-select d-inline w-auto"
-                    onchange="this.form.submit()">
+            <select id="sexo" name="sexo" class="form-select d-inline w-auto" onchange="this.form.submit()">
                 <option value="">Todos</option>
-                <option value="M" @(ViewBag.SexoActual == "M" ? "selected" : "")>Masculino</option>
-                <option value="F" @(ViewBag.SexoActual == "F" ? "selected" : "")>Femenino</option>
+
+                @if (sexoActual == "M")
+                {
+                    <option value="M" selected>Masculino</option>
+                }
+                else
+                {
+                    <option value="M">Masculino</option>
+                }
+
+                @if (sexoActual == "F")
+                {
+                    <option value="F" selected>Femenino</option>
+                }
+                else
+                {
+                    <option value="F">Femenino</option>
+                }
             </select>
         </form>
     </span>
