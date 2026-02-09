@@ -170,4 +170,3 @@ C:\Users\aylas\Desktop\Prueba PowerMass\Myper.Trabajadores.Web\Myper.Trabajadore
 C:\Users\aylas\Desktop\Prueba PowerMass\Myper.Trabajadores.Web\Myper.Trabajadores.Web\obj\Debug\net8.0\Myper.Trabajadores.Web.pdb
 C:\Users\aylas\Desktop\Prueba PowerMass\Myper.Trabajadores.Web\Myper.Trabajadores.Web\obj\Debug\net8.0\Myper.Trabajadores.Web.genruntimeconfig.cache
 C:\Users\aylas\Desktop\Prueba PowerMass\Myper.Trabajadores.Web\Myper.Trabajadores.Web\obj\Debug\net8.0\ref\Myper.Trabajadores.Web.dll
-C:\Users\aylas\Desktop\Prueba PowerMass\Myper.Trabajadores.Web\Myper.Trabajadores.Web\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

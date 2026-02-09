@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Myper.Trabajadores.Web.Models
 {
+    // Entidad que representa a un trabajador en la base de datos
     public class Trabajador
     {
         public int Id { get; set; }
@@ -26,7 +27,7 @@ namespace Myper.Trabajadores.Web.Models
         public string NumeroDocumento { get; set; } = string.Empty;
 
         [Required]
-        public char Sexo { get; set; } // 'M' o 'F'
+        public char Sexo { get; set; }  // 'M' o 'F'
 
         [Required]
         [DataType(DataType.Date)]
@@ -40,6 +41,7 @@ namespace Myper.Trabajadores.Web.Models
 
         public DateTime FechaRegistro { get; set; }
 
+        // Borrado lógico: true = activo, false = eliminado
         public bool Activo { get; set; } = true;
     }
 }

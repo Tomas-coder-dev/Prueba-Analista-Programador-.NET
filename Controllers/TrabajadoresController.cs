@@ -14,18 +14,16 @@ namespace Myper.Trabajadores.Web.Controllers
             _context = context;
         }
 
-        // GET: Trabajadores
+        // Listado de trabajadores (permite filtrar por sexo M/F)
         public async Task<IActionResult> Index(string? sexo)
         {
-            // Obtenemos la lista desde el procedimiento almacenado
             var trabajadores = await _context.Trabajadores
                 .FromSqlRaw("EXEC sp_ListarTrabajadores")
                 .ToListAsync();
 
-            // Filtro opcional por sexo (M/F)
-            if (!string.IsNullOrEmpty(sexo))
+            if (!string.IsNullOrWhiteSpace(sexo))
             {
-                sexo = sexo.ToUpper();
+                sexo = sexo.ToUpperInvariant();
                 if (sexo == "M" || sexo == "F")
                 {
                     trabajadores = trabajadores
@@ -38,13 +36,13 @@ namespace Myper.Trabajadores.Web.Controllers
             return View(trabajadores);
         }
 
-        // GET: Trabajadores/Create
+        // Vista de registro
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Trabajadores/Create
+        // Registro de nuevo trabajador
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Trabajador trabajador, IFormFile? fotoArchivo)
@@ -77,29 +75,33 @@ namespace Myper.Trabajadores.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Trabajadores/Edit/5
+        // Vista de edición
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+                return NotFound();
 
             var trabajador = await _context.Trabajadores.FindAsync(id);
-            if (trabajador == null || !trabajador.Activo) return NotFound();
+            if (trabajador == null || !trabajador.Activo)
+                return NotFound();
 
             return View(trabajador);
         }
 
-        // POST: Trabajadores/Edit/5
+        // Actualización de datos del trabajador
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Trabajador trabajador, IFormFile? fotoArchivo)
         {
-            if (id != trabajador.Id) return NotFound();
+            if (id != trabajador.Id)
+                return NotFound();
 
             if (!ModelState.IsValid)
                 return View(trabajador);
 
             var existente = await _context.Trabajadores.FindAsync(id);
-            if (existente == null || !existente.Activo) return NotFound();
+            if (existente == null || !existente.Activo)
+                return NotFound();
 
             existente.Nombres = trabajador.Nombres;
             existente.Apellidos = trabajador.Apellidos;
@@ -130,19 +132,21 @@ namespace Myper.Trabajadores.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Trabajadores/Delete/5
+        // Vista de confirmación de eliminación
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null) return NotFound();
+            if (id == null)
+                return NotFound();
 
             var trabajador = await _context.Trabajadores
                 .FirstOrDefaultAsync(m => m.Id == id && m.Activo);
-            if (trabajador == null) return NotFound();
+            if (trabajador == null)
+                return NotFound();
 
             return View(trabajador);
         }
 
-        // POST: Trabajadores/Delete/5
+        // Borrado lógico del trabajador (Activo = false)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -153,6 +157,7 @@ namespace Myper.Trabajadores.Web.Controllers
                 trabajador.Activo = false;
                 await _context.SaveChangesAsync();
             }
+
             return RedirectToAction(nameof(Index));
         }
     }

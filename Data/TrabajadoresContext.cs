@@ -3,6 +3,7 @@ using Myper.Trabajadores.Web.Models;
 
 namespace Myper.Trabajadores.Web.Data
 {
+    // DbContext principal de la aplicación
     public class TrabajadoresContext : DbContext
     {
         public TrabajadoresContext(DbContextOptions<TrabajadoresContext> options)
@@ -12,6 +13,7 @@ namespace Myper.Trabajadores.Web.Data
 
         public DbSet<Trabajador> Trabajadores { get; set; }
 
+        // Configuración de mapeo entre la entidad y la tabla SQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -38,6 +40,7 @@ namespace Myper.Trabajadores.Web.Data
                       .IsRequired()
                       .HasMaxLength(20);
 
+                // Evita números de documento duplicados
                 entity.HasIndex(e => e.NumeroDocumento)
                       .IsUnique();
 
