@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Myper.Trabajadores.Web.Models.Trabajador>
+
+@{
+    ViewData["Title"] = "Listado de Trabajadores";
+}
+
+<h1>Listado de Trabajadores</h1>
+
+<p class="d-flex justify-content-between">
+    <span>
+        <a asp-action="Create" class="btn btn-primary">Nuevo Trabajador</a>
+    </span>
+
+    <span>
+        <form asp-action="Index" method="get" class="d-inline">
+            <label for="sexo" class="form-label me-2">Filtrar por sexo:</label>
+            <select id="sexo" name="sexo" class="form-select d-inline w-auto"
+                    onchange="this.form.submit()">
+                <option value="">Todos</option>
+                <option value="M" @(ViewBag.SexoActual == "M" ? "selected" : "")>Masculino</option>
+                <option value="F" @(ViewBag.SexoActual == "F" ? "selected" : "")>Femenino</option>
+            </select>
+        </form>
+    </span>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Tipo Doc.</th>
+            <th>Nro Doc.</th>
+            <th>Sexo</th>
+            <th>Fecha Nac.</th>
+            <th>Dirección</th>
+            <th>Foto</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var rowClass = item.Sexo == 'M' ? "table-primary" : "table-warning";
+            <tr class="@rowClass">
+                <td>@item.Nombres</td>
+                <td>@item.Apellidos</td>
+                <td>@item.TipoDocumento</td>
+                <td>@item.NumeroDocumento</td>
+                <td>@(item.Sexo == 'M' ? "Masculino" : "Femenino")</td>
+                <td>@item.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                <td>@item.Direccion</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Foto))
+                    {
+                        <img src="@item.Foto" alt="Foto" style="width:50px;height:50px;object-fit:cover;" />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
